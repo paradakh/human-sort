@@ -1,0 +1,7 @@
+[package]
+name = "human-sort"
+version = "0.1.0"
+authors = ["Vlad Nagikh <vladnagih@yandex.ru>"]
+edition = "2018"
+
+[dependencies]
