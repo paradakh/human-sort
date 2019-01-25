@@ -1,6 +1,6 @@
 [package]
 name = "human_sort"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Vlad Nagikh <paradakh@protonmail.com>"]
 edition = "2018"
 license = "MIT"
