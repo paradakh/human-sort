@@ -1,5 +1,5 @@
 [package]
-name = "human_sort"
+name = "human-sort"
 version = "0.1.2"
 authors = ["Vlad Nagikh <paradakh@protonmail.com>"]
 edition = "2018"
