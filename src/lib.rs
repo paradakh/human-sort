@@ -1,65 +1,19 @@
 use std::{
-    cmp::{Eq, Ord, Ordering, PartialEq, PartialOrd},
+    cmp::Ordering,
     iter::Peekable,
     str::Chars,
 };
 
 #[test]
-fn compare_by_alphabet() {
-    assert_eq!(
-        HumanStr::from_str("aaa").cmp(&HumanStr::from_str("bbb")),
-        Ordering::Less
-    );
-}
-
-#[test]
-fn compare_with_numeric() {
-    assert_eq!(
-        HumanStr::from_str("a1aa").cmp(&HumanStr::from_str("a2aa")),
-        Ordering::Less
-    )
-}
-
-#[test]
 fn should_sort() {
     let mut arr = ["lol10", "lol2"];
-    human_sort(&mut arr);
+    sort(&mut arr);
 
     assert_eq!(arr, ["lol2", "lol10"]);
 }
 
-pub struct HumanStr<'a> {
-    s: &'a str,
-}
-
-impl<'a> HumanStr<'a> {
-    pub fn from_str(s: &'a str) -> Self {
-        Self { s }
-    }
-}
-
-impl<'a> PartialEq for HumanStr<'a> {
-    fn eq(&self, other: &Self) -> bool {
-        self.s == other.s
-    }
-}
-
-impl<'a> Eq for HumanStr<'a> {}
-
-impl<'a> Ord for HumanStr<'a> {
-    fn cmp(&self, other: &Self) -> Ordering {
-        compare(self.s, other.s)
-    }
-}
-
-impl<'a> PartialOrd for HumanStr<'a> {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
-        Some(self.cmp(other))
-    }
-}
-
-pub fn human_sort(arr: &mut [&str]) {
-    arr.sort_by(|a, b| HumanStr::from_str(a).cmp(&HumanStr::from_str(b)));
+pub fn sort(arr: &mut [&str]) {
+    arr.sort_by(|a, b| compare(a, b));
 }
 
 pub fn compare(s1: &str, s2: &str) -> Ordering {
