@@ -1,17 +1,33 @@
 use std::{cmp::Ordering, iter::Peekable, str::Chars};
 
-#[test]
-fn should_sort() {
-    let mut arr = ["lol10", "lol2"];
-    sort(&mut arr);
-
-    assert_eq!(arr, ["lol2", "lol10"]);
-}
-
+/// Sorts the array in human order
+///
+/// # Example
+///
+/// ```
+/// use human_sort::sort;
+///
+/// let mut arr = ["file10.txt", "file2.txt", "file1.txt"];
+/// sort(&mut arr);
+///
+/// assert_eq!(arr, ["file1.txt", "file2.txt", "file10.txt"]);
+/// ```
+///
 pub fn sort(arr: &mut [&str]) {
     arr.sort_by(|a, b| compare(a, b));
 }
 
+/// Compares two string slices case insensitively
+///
+/// # Example
+///
+/// ```
+/// use std::cmp::Ordering;
+/// use human_sort::compare;
+///
+/// assert_eq!(compare("item200", "item3"), Ordering::Greater);
+/// ```
+///
 pub fn compare(s1: &str, s2: &str) -> Ordering {
     let mut s1_iter = s1.chars().peekable();
     let mut s2_iter = s2.chars().peekable();
