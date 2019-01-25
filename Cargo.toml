@@ -1,7 +1,16 @@
 [package]
 name = "human-sort"
 version = "0.1.0"
-authors = ["Vlad Nagikh <vladnagih@yandex.ru>"]
+authors = ["Vlad Nagikh <paradakh@protonmail.com>"]
 edition = "2018"
+license = "MIT"
+repository = "https://github.com/vladnagih/human-sort"
+description = "Human sort (naturla sort) implementation"
+keywords = ["sort", "natural", "human", "order"]
 
 [dependencies]
+
+
+
+
+

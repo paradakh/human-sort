@@ -1,8 +1,4 @@
-use std::{
-    cmp::Ordering,
-    iter::Peekable,
-    str::Chars,
-};
+use std::{cmp::Ordering, iter::Peekable, str::Chars};
 
 #[test]
 fn should_sort() {
