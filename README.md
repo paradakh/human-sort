@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/https://travis-ci.org/vladnagih/human-sort.svg?branch=master)](https://travis-ci.org/https://travis-ci.org/vladnagih/human-sort)
+[![Build Status](https://travis-ci.org/vladnagih/human-sort.svg?branch=master)](https://travis-ci.org/vladnagih/human-sort)
 
 # human-sort
 
