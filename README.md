@@ -1,3 +1,4 @@
+[![Crates.io](https://img.shields.io/crates/v/human-sort.svg)](https://crates.io/crates/human-sort)
 [![Build Status](https://travis-ci.org/vladnagih/human-sort.svg?branch=master)](https://travis-ci.org/vladnagih/human-sort)
 
 # human-sort
@@ -29,4 +30,6 @@ use human_sort::compare;
 assert_eq!(compare("item200", "item3"), Ordering::Greater);
 ```
 
-License: MIT
+## License
+
+Licensed under MIT license.
