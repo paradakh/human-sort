@@ -1,0 +1,13 @@
+language: rust
+cache: cargo
+script:
+  - cargo fmt
+  - cargo test
+  - cargo install cargo-readme
+  - cargo readme > README.md
+deploy:
+  provider: cargo
+  token: $API_TOKEN
+  on:
+    branch: master
+    tags: true
