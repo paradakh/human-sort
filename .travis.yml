@@ -4,8 +4,6 @@ script:
   - rustup component add rustfmt
   - cargo fmt
   - cargo test
-  - cargo install cargo-readme --force
-  - cargo readme > README.md
 deploy:
   provider: cargo
   token: $API_TOKEN

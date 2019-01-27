@@ -9,4 +9,7 @@ keywords = ["sort", "natural", "human", "order"]
 readme = "README.md"
 edition = "2018"
 
+[badges]
+travis-ci = { repository = "https://github.com/vladnagih/human-sort", branch = "master" }
+
 [dependencies]
