@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/https://travis-ci.org/vladnagih/human-sort.svg?branch=master)](https://travis-ci.org/https://travis-ci.org/vladnagih/human-sort)
+
 # human-sort
 
 `human-sort` is a collection of utilities to sort and compare strings with numeric symbols

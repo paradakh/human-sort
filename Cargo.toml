@@ -1,6 +1,6 @@
 [package]
 name = "human-sort"
-version = "0.1.9"
+version = "0.1.10"
 authors = ["Vlad Nagikh <paradakh@protonmail.com>"]
 license = "MIT"
 repository = "https://github.com/vladnagih/human-sort"
@@ -10,6 +10,6 @@ readme = "README.md"
 edition = "2018"
 
 [badges]
-travis-ci = { repository = "https://github.com/vladnagih/human-sort", branch = "master" }
+travis-ci = { repository = "https://travis-ci.org/vladnagih/human-sort", branch = "master" }
 
 [dependencies]
