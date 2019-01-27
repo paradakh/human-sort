@@ -1,11 +1,12 @@
 [package]
 name = "human-sort"
-version = "0.1.4"
+version = "0.1.5"
 authors = ["Vlad Nagikh <paradakh@protonmail.com>"]
 edition = "2018"
 license = "MIT"
 repository = "https://github.com/vladnagih/human-sort"
 description = "Human sort (natural sort) implementation"
 keywords = ["sort", "natural", "human", "order"]
+readme = "README.md"
 
 [dependencies]
