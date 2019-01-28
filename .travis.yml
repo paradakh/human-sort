@@ -1,8 +1,6 @@
 language: rust
 cache: cargo
 script:
-  - rustup component add rustfmt
-  - cargo fmt
   - cargo test
 deploy:
   provider: cargo
