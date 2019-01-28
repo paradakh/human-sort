@@ -3,13 +3,13 @@
 
 # human-sort
 
-`human-sort` is a collection of utilities to sort and compare strings with numeric symbols
+Collection of utilities to sort and compare strings with numeric symbols
 in human-friendly order.
 
-Utilities built over `iterator` and compare strings `char` by char (except for numerals)
+Utilities built over iterators and compare strings char by char (except for numerals)
 until the first difference found.
 
-Utilities don't create Strings or another structures with whole data from provided `&str`,
+Utilities don't create Strings or another structures with whole data from provided &str,
 so don't require lots of memory.
 
 ## Examples

@@ -1,10 +1,10 @@
-//! `human-sort` is a collection of utilities to sort and compare strings with numeric symbols
+//! Collection of utilities to sort and compare strings with numeric symbols
 //! in human-friendly order.
 //!
-//! Utilities built over `iterator` and compare strings `char` by char (except for numerals)
+//! Utilities built over iterators and compare strings char by char (except for numerals)
 //! until the first difference found.
 //!
-//! Utilities don't create Strings or another structures with whole data from provided `&str`,
+//! Utilities don't create Strings or another structures with whole data from provided &str,
 //! so don't require lots of memory.
 //!
 //! # Examples
@@ -62,9 +62,7 @@ pub fn compare(s1: &str, s2: &str) -> Ordering {
     loop {
         let (x, y) = (s1_iter.next(), s2_iter.next());
 
-        if x.is_some() && y.is_some() {
-            let (x, y) = (x.unwrap(), y.unwrap());
-
+        if let (Some(x), Some(y)) = (x, y) {
             if x == y {
                 continue;
             } else {
@@ -91,9 +89,15 @@ pub fn compare(s1: &str, s2: &str) -> Ordering {
 fn parse_numeric_part(val: char, iter: &mut Peekable<Chars>) -> u32 {
     let mut sum = val.to_string();
 
-    while iter.peek().is_some() && iter.peek().unwrap().is_numeric() {
-        sum.push(iter.next().unwrap());
+    while let Some(p) = iter.peek() {
+        if p.is_numeric() {
+            // next should be some, because peek is some
+            sum.push(iter.next().unwrap());
+        } else {
+            break;
+        }
     }
 
+    // sum parse should return ok, because contains only numeric chars
     sum.parse().unwrap()
 }
