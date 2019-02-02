@@ -27,7 +27,7 @@
 
 use std::{cmp::Ordering, iter::Peekable, str::Chars};
 
-/// Sorts [&str] in human order
+/// Sorts [&str] in human-friendly order
 ///
 /// # Example
 ///
@@ -60,19 +60,17 @@ pub fn compare(s1: &str, s2: &str) -> Ordering {
     let mut s2_iter = s2.chars().peekable();
 
     loop {
-        let (x, y) = (s1_iter.next(), s2_iter.next());
+        let (x, y) = (s1_iter.peek(), s2_iter.peek());
 
         if let (Some(x), Some(y)) = (x, y) {
-            if x == y {
-                continue;
-            } else {
+            if x != y {
                 match (x.is_numeric(), y.is_numeric()) {
                     (false, false) => return x.to_lowercase().cmp(y.to_lowercase()),
                     (true, false) => return Ordering::Greater,
                     (false, true) => return Ordering::Less,
                     (true, true) => {
-                        let x_sum = parse_numeric_part(x, &mut s1_iter);
-                        let y_sum = parse_numeric_part(y, &mut s2_iter);
+                        let x_sum = parse_numeric_part(&mut s1_iter);
+                        let y_sum = parse_numeric_part(&mut s2_iter);
 
                         if x_sum != y_sum {
                             return x_sum.cmp(&y_sum);
@@ -83,21 +81,24 @@ pub fn compare(s1: &str, s2: &str) -> Ordering {
         } else {
             return s1.len().cmp(&s2.len());
         };
+
+        s1_iter.next();
+        s2_iter.next();
     }
 }
 
-fn parse_numeric_part(val: char, iter: &mut Peekable<Chars>) -> u32 {
-    let mut sum = val.to_string();
+fn parse_numeric_part(iter: &mut Peekable<Chars>) -> u32 {
+    let mut sum = 0;
 
     while let Some(p) = iter.peek() {
-        if p.is_numeric() {
-            // next should be some, because peek is some
-            sum.push(iter.next().unwrap());
-        } else {
-            break;
+        match p.to_string().parse::<u32>() {
+            Ok(n) => {
+                sum = sum * 10 + n;
+                iter.next();
+            }
+            _ => break,
         }
     }
 
-    // sum parse should return ok, because contains only numeric chars
-    sum.parse().unwrap()
+    sum
 }
