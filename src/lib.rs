@@ -1,7 +1,6 @@
-//! Collection of utilities to sort and compare strings with numeric symbols
-//! in human-friendly order.
+//! Utilities to sort and compare strings with numeric symbols in human-friendly order.
 //!
-//! Utilities built over iterators and compare strings char by char (except for numerals)
+//! Utilities built over iterators and compare string slices char by char (except for numerals)
 //! until the first difference found.
 //!
 //! Utilities don't create Strings or another structures with whole data from provided &str,
@@ -25,6 +24,9 @@
 //! assert_eq!(compare("item200", "item3"), Ordering::Greater);
 //! ```
 
+mod iter_pair;
+
+use iter_pair::IterPair;
 use std::{cmp::Ordering, iter::Peekable, str::Chars};
 
 /// Sorts [&str] in human-friendly order
@@ -44,7 +46,7 @@ pub fn sort(arr: &mut [&str]) {
     arr.sort_by(|a, b| compare(a, b));
 }
 
-/// Compares two string slices case insensitively
+/// Compares string slices
 ///
 /// # Example
 ///
@@ -56,38 +58,36 @@ pub fn sort(arr: &mut [&str]) {
 /// ```
 ///
 pub fn compare(s1: &str, s2: &str) -> Ordering {
-    let mut s1_iter = s1.chars().peekable();
-    let mut s2_iter = s2.chars().peekable();
-
-    loop {
-        let (x, y) = (s1_iter.peek(), s2_iter.peek());
-
-        if let (Some(x), Some(y)) = (x, y) {
-            if x != y {
-                match (x.is_numeric(), y.is_numeric()) {
-                    (false, false) => return x.to_lowercase().cmp(y.to_lowercase()),
-                    (true, false) => return Ordering::Greater,
-                    (false, true) => return Ordering::Less,
-                    (true, true) => {
-                        let x_sum = parse_numeric_part(&mut s1_iter);
-                        let y_sum = parse_numeric_part(&mut s2_iter);
-
-                        if x_sum != y_sum {
-                            return x_sum.cmp(&y_sum);
-                        }
-                    }
-                }
-            };
-        } else {
-            return s1.len().cmp(&s2.len());
-        };
-
-        s1_iter.next();
-        s2_iter.next();
-    }
+    compare_chars_iters(s1.chars(), s2.chars()).unwrap_or(s1.cmp(s2))
 }
 
-fn parse_numeric_part(iter: &mut Peekable<Chars>) -> u32 {
+///
+/// ```
+/// use std::cmp::Ordering;
+/// use human_sort::compare_chars_iters;
+/// assert_eq!(compare_chars_iters("aaa".chars(), "bbb".chars()), Ok(Ordering::Less));
+/// ```
+///
+pub fn compare_chars_iters<'a>(c1: Chars<'a>, c2: Chars<'a>) -> Result<Ordering, ()> {
+    let mut iters = IterPair::from(c1, c2);
+
+    while let [Some(x), Some(y)] = iters.peek() {
+        if x == y {
+            iters.next();
+        } else if x.is_numeric() && y.is_numeric() {
+            match take_numeric(&mut iters.fst).cmp(&take_numeric(&mut iters.lst)) {
+                Ordering::Equal => iters.next(),
+                ref a => return Ok(*a),
+            };
+        } else {
+            return Ok(x.cmp(y));
+        }
+    }
+
+    Err(())
+}
+
+fn take_numeric(iter: &mut Peekable<Chars>) -> u32 {
     let mut sum = 0;
 
     while let Some(p) = iter.peek() {
