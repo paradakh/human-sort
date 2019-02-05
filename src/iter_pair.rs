@@ -1,4 +1,4 @@
-use std::{iter::{Peekable}, str::Chars};
+use std::{iter::Peekable, str::Chars};
 
 pub struct IterPair<'a> {
     pub fst: Peekable<Chars<'a>>,
