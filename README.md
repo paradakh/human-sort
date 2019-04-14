@@ -1,15 +1,13 @@
 [![Crates.io](https://img.shields.io/crates/v/human-sort.svg)](https://crates.io/crates/human-sort)
-[![Build Status](https://travis-ci.org/vladnagih/human-sort.svg?branch=master)](https://travis-ci.org/vladnagih/human-sort)
+[![Build Status](https://travis-ci.org/paradakh/human-sort.svg?branch=master)](https://travis-ci.org/paradakh/human-sort)
 
 # human-sort
 
 Utilities to sort and compare strings with numeric symbols in human-friendly order.
 
-Utilities built over iterators and compare string slices char by char (except for numerals)
-until the first difference found.
-
-Utilities don't create Strings or another structures with whole data from provided &str,
-so don't require lots of memory.
+It built over iterators and compare string slices char by char (except for numerals)
+until the first difference found without creating Strings or another structures with whole
+data from provided &str, so doesn't require lots of memory.
 
 ## Examples
 

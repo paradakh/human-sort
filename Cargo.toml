@@ -1,9 +1,9 @@
 [package]
 name = "human-sort"
-version = "0.2.1"
+version = "0.2.2"
 authors = ["Vlad Nagikh <paradakh@protonmail.com>"]
 license = "MIT"
-repository = "https://github.com/vladnagih/human-sort"
+repository = "https://github.com/paradakh/human-sort"
 description = "Human sort (natural sort) implementation"
 keywords = ["sort", "natural", "human", "order"]
 readme = "README.md"
@@ -11,7 +11,7 @@ edition = "2018"
 categories = ["algorithms"]
 
 [badges]
-travis-ci = { repository = "vladnagih/human-sort", branch = "master" }
+travis-ci = { repository = "paradakh/human-sort", branch = "master" }
 
 
 [dependencies]
