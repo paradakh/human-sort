@@ -43,8 +43,20 @@ use std::{cmp::Ordering, str::Chars};
 /// assert_eq!(arr, ["file1.txt", "file2.txt", "file10.txt"]);
 /// ```
 ///
-pub fn sort(arr: &mut [&str]) {
-    arr.sort_by(|a, b| compare(a, b));
+pub fn sort<T: AsRef<str>>(arr: &mut [T]) {
+    arr.sort_by(|a, b| compare(a.as_ref(), b.as_ref()));
+}
+#[test]
+fn test_sort() {
+    macro_rules! sorted {
+        ($in:expr) => {{
+            let mut v = $in;
+            sort(&mut v);
+            v
+        }}
+    }
+    assert_eq!(sorted!(["file10.txt", "file2.txt", "file1.txt"]), ["file1.txt", "file2.txt", "file10.txt"]);
+    assert_eq!(sorted!(["file10.txt".to_string(), "file2.txt".to_string(), "file1.txt".to_string()]), ["file1.txt", "file2.txt", "file10.txt"]);
 }
 
 /// Compares string slices
