@@ -31,7 +31,7 @@ impl Ord for BigNum {
 }
 impl PartialEq for BigNum {
     fn eq(&self, other: &Self) -> bool {
-        self.cmp(other) == Ordering::Equal
+        self.0 == other.0
     }
 }
 impl Eq for BigNum {}
