@@ -70,19 +70,27 @@ pub fn compare_chars_iters<'a>(c1: Chars<'a>, c2: Chars<'a>) -> Result<Ordering,
     let mut iters = IterPair::from(c1, c2);
 
     while let [Some(x), Some(y)] = iters.peek() {
-        if x == y {
-            iters.next();
-        } else if x.is_numeric() && y.is_numeric() {
-            match take_numeric(&mut iters.fst).cmp(&take_numeric(&mut iters.lst)) {
-                Ordering::Equal => iters.next(),
-                ref a => return Ok(*a),
-            };
+        let cmp = if x.is_numeric() && y.is_numeric() {
+            take_numeric(&mut iters.fst).cmp(&take_numeric(&mut iters.lst))
         } else {
-            return Ok(x.cmp(y));
-        }
+            x.cmp(y)
+        };
+
+        match cmp {
+            Ordering::Equal => iters.next(),
+            a => return Ok(a),
+        };
     }
 
     Err(())
+}
+#[test]
+fn test_compare_chars_iters() {
+    assert_eq!(compare_chars_iters("x101".chars(), "x1000".chars()), Ok(Ordering::Less));
+    assert_eq!(compare_chars_iters("x101".chars(), "x2000".chars()), Ok(Ordering::Less));
+
+    assert_eq!(compare_chars_iters("1:".chars(), "15:".chars()), Ok(Ordering::Less));
+    assert_eq!(compare_chars_iters("101:".chars(), "15:".chars()), Ok(Ordering::Greater));
 }
 
 fn take_numeric(iter: &mut Peekable<Chars>) -> u32 {
