@@ -23,9 +23,12 @@
 //! ```
 
 mod iter_pair;
+mod big_num;
 
 use iter_pair::IterPair;
-use std::{cmp::Ordering, iter::Peekable, str::Chars};
+use big_num::BigNum;
+
+use std::{cmp::Ordering, str::Chars};
 
 /// Sorts [&str] in human-friendly order
 ///
@@ -70,8 +73,8 @@ pub fn compare_chars_iters<'a>(c1: Chars<'a>, c2: Chars<'a>) -> Result<Ordering,
     let mut iters = IterPair::from(c1, c2);
 
     while let [Some(x), Some(y)] = iters.peek() {
-        let cmp = if x.is_numeric() && y.is_numeric() {
-            take_numeric(&mut iters.fst).cmp(&take_numeric(&mut iters.lst))
+        let cmp = if x.is_digit(10) && y.is_digit(10) {
+            BigNum::extract(&mut iters.fst).cmp(&BigNum::extract(&mut iters.lst))
         } else {
             x.cmp(y)
         };
@@ -91,20 +94,9 @@ fn test_compare_chars_iters() {
 
     assert_eq!(compare_chars_iters("1:".chars(), "15:".chars()), Ok(Ordering::Less));
     assert_eq!(compare_chars_iters("101:".chars(), "15:".chars()), Ok(Ordering::Greater));
-}
 
-fn take_numeric(iter: &mut Peekable<Chars>) -> u32 {
-    let mut sum = 0;
-
-    while let Some(p) = iter.peek() {
-        match p.to_string().parse::<u32>() {
-            Ok(n) => {
-                sum = sum * 10 + n;
-                iter.next();
-            }
-            _ => break,
-        }
-    }
-
-    sum
+    assert_eq!(compare_chars_iters(
+        "PowerTools/x86_64/os/repodata/9379911671413f8a51cd04665cd9bafc8200f927505008e8a11145034b53c776-other.xml.gz".chars(),
+        "PowerTools/x86_64/os/repodata/43ed191200dbc7c83be76c3410f118f931bbe21ff6a58f5f549d0e351f3aea94-other.sqlite.xz".chars()),
+        Ok(Ordering::Greater));
 }
