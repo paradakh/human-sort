@@ -112,4 +112,8 @@ fn test_compare_chars_iters() {
         "PowerTools/x86_64/os/repodata/9379911671413f8a51cd04665cd9bafc8200f927505008e8a11145034b53c776-other.xml.gz".chars(),
         "PowerTools/x86_64/os/repodata/43ed191200dbc7c83be76c3410f118f931bbe21ff6a58f5f549d0e351f3aea94-other.sqlite.xz".chars()),
         Ordering::Greater);
+
+    assert_eq!(compare_chars_iters("apple".chars(), "apples".chars()), Ordering::Less);
+    assert_eq!(compare_chars_iters("apples".chars(), "apple".chars()), Ordering::Greater);
+    assert_eq!(compare_chars_iters("apples".chars(), "apples".chars()), Ordering::Equal);
 }
